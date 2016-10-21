@@ -38,12 +38,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:ems="10"
-        android:layout_marginBottom="54dp"
-        android:id="@+id/et_nombre"
         android:layout_above="@+id/bt_guardar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="56dp"
+        android:id="@+id/et_nombre"
+        android:hint="Título" />
 
 </RelativeLayout>

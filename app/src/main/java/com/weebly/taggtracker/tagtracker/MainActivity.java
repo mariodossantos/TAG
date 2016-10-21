@@ -29,7 +29,34 @@ public class MainActivity extends AppCompatActivity {
 
         bt_guardar.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                guardar(et_nombre.getText().toString());
+                //Comportamento para salvar a tag
+                View btnSalvar = findViewById(R.id.bt_guardar);
+                final EditText txtTitulo = (EditText ) findViewById(R.id.et_nombre);
+                btnSalvar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Verifica se vazio
+                        if (txtTitulo.getText().toString().isEmpty()){
+                            txtTitulo.setError("Digite um título!");
+                            return;
+                        }
+                        //Verifica se maior que 3  30 caracteres
+                        if (txtTitulo.getText().length() < 3 || txtTitulo.getText().length() > 30){
+                            txtTitulo.setError("O título deve ter entre 3 e 30 caracteres!");
+                            return;
+                        }
+                        //Verifica se existe checklist igual
+                        /*
+                        if (txtTitulo.getText().toString() == funcao()){
+                            txtTitulo.setError("Já existe uma checklist com esse nome salva!");
+                            return;
+                        }
+                        */
+                            guardar(et_nombre.getText().toString());
+
+                    }
+                });
+
             }
         });
 
