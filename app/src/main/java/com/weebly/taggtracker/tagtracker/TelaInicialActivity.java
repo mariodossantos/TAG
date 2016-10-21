@@ -32,6 +32,7 @@ public class TelaInicialActivity extends AppCompatActivity
 
     private NfcAdapter mNfcAdapter;
     private Dialog dialog;
+    private BancoDeDados bd;
 
 
     private TabLayout tabLayout;
@@ -54,6 +55,8 @@ public class TelaInicialActivity extends AppCompatActivity
         setContentView(R.layout.activity_tela_inicial);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        bd.instanciaBD(TelaInicialActivity.this);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -83,7 +86,6 @@ public class TelaInicialActivity extends AppCompatActivity
         arrumaTabs();
 
     }
-
 
     public void arrumaTabs(){
 
@@ -152,7 +154,7 @@ public class TelaInicialActivity extends AppCompatActivity
         usaBtnTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verificaNFC(_view))
+                //if (verificaNFC(_view))
                     carregaAddTags();
             }
         });
@@ -171,7 +173,9 @@ public class TelaInicialActivity extends AppCompatActivity
     }
 
     public void carregaAddTags(){
-        Toast.makeText(this, "Carrega a tela de add as tags", Toast.LENGTH_LONG).show();
+        CadastraTags ct = new CadastraTags(bd);
+        Intent it = new Intent(TelaInicialActivity.this, ct.getClass());
+        startActivity(it);
     }
 
     //VERIFICA NFC AQUI

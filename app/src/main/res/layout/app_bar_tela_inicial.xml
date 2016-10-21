@@ -27,9 +27,8 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:contextClickable="false"
-                app:logo="@mipmap/ic_launcher"
                 app:logoDescription="TAGTRACKER"
-                app:title="Tag Tracker">
+                app:title="TAGTRACKER">
 
             </android.support.v7.widget.Toolbar>
 
@@ -61,16 +60,12 @@
             class="android.support.v4.view.ViewPager"
             android:id="@+id/pager" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
     </LinearLayout>
 
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="244dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
