@@ -2,6 +2,7 @@ package com.weebly.taggtracker.tagtracker;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         //Verifica se existe checklist igual
-                        /*
-                        if (txtTitulo.getText().toString() == funcao()){
+                        ArrayList<String> listaTotal = leChecklist();
+
+                        if (listaTotal.contains(txtTitulo.getText().toString())){
                             txtTitulo.setError("Já existe uma checklist com esse nome salva!");
                             return;
                         }
-                        */
+
                             guardar(et_nombre.getText().toString());
 
                     }
@@ -82,11 +86,27 @@ public class MainActivity extends AppCompatActivity {
             db.close();
             Toast.makeText(this,"CheckList Inserida com sucesso ",Toast.LENGTH_SHORT).show();
 
-
-
         }catch (Exception e){
             Toast.makeText(this,"ERROR" +e.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    public ArrayList<String> leChecklist(){
+        ArrayList<String> resp = new ArrayList<String>();
+
+        BaseHelper helper = new BaseHelper(this, "Demo", null,1);
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("select nombre from personas", null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                String linea = cursor.getString(0);
+                resp.add(linea);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return resp;
     }
 }
