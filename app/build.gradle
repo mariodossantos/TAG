@@ -36,3 +36,6 @@ dependencies {
 }
 
 ///offline
+dependencies{
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
+}

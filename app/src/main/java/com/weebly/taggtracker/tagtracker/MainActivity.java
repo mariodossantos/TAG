@@ -41,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
                         //Verifica se vazio
                         if (txtTitulo.getText().toString().isEmpty()){
                             txtTitulo.setError("Digite um título!");
+                            txtTitulo.setText("");
                             return;
                         }
                         //Verifica se maior que 3  30 caracteres
                         if (txtTitulo.getText().length() < 3 || txtTitulo.getText().length() > 30){
                             txtTitulo.setError("O título deve ter entre 3 e 30 caracteres!");
+                            txtTitulo.setText("");
                             return;
                         }
                         //Verifica se existe checklist igual
@@ -53,11 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
                         if (listaTotal.contains(txtTitulo.getText().toString())){
                             txtTitulo.setError("Já existe uma checklist com esse nome salva!");
+                            txtTitulo.setText("");
                             return;
                         }
 
                             guardar(et_nombre.getText().toString());
-
+                            txtTitulo.setText("");
                     }
                 });
 
@@ -69,11 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Listado.class));
             }
         });
-
-
     }
-
-
 
     private void guardar(String Nombre){
         BaseHelper helper = new BaseHelper(this, "Demo", null,1);
