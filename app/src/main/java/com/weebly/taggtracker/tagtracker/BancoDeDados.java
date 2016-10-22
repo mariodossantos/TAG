@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,8 @@ public final class BancoDeDados  {
     public static final String nomeDB = "tagtracker";
     public  BancoDeDadosHelper bdhelper;
 
-    public BancoDeDados(){}
+    public BancoDeDados(){
+    }
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String SQL_CREATE_ENTRIES =
@@ -90,7 +92,7 @@ public final class BancoDeDados  {
      ******************************************* */
     public BancoDeDadosHelper instanciaBD(Context contexto) {
         //Para acessar o banco de dados, só instanciar o helper
-        bdhelper = new BancoDeDadosHelper(contexto);
+
         return  bdhelper;
     }
 
@@ -285,6 +287,36 @@ public final class BancoDeDados  {
                 selectionArgs);
     }
 
+
+    //BUSCA
+    public int retornaProxIDTags(){
+        int id;
+
+        SQLiteDatabase db = bdhelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select coalesce( max(" + tabelaTags.colunaID + ", 0) from " + tabelaTags.nomeTabela, null);
+
+        cursor.moveToFirst();
+        String resp = cursor.getString(cursor.getColumnIndexOrThrow(tabelaTags.colunaID) );
+        db.close();
+
+        return Integer.parseInt(resp) + 1;
+    }
+
+    public int retornaProxIDChecklists(){
+        int id;
+
+        SQLiteDatabase db = bdhelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select coalesce( max(" + tabelaChecklists.colunaID + ", 0) from "
+                + tabelaChecklists.nomeTabela, null);
+
+        cursor.moveToFirst();
+        String resp = cursor.getString(cursor.getColumnIndexOrThrow(tabelaChecklists.colunaID) );
+        db.close();
+
+        return Integer.parseInt(resp) + 1;
+    }
 }
 
 
