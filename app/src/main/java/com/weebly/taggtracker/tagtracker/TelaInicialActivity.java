@@ -100,6 +100,7 @@ public class TelaInicialActivity extends AppCompatActivity
 
     }
 
+
     public void abreMenu(final View _view){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
