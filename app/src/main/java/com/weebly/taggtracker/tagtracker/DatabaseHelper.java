@@ -65,33 +65,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "DROP TABLE IF EXISTS " + tabelaTags.nomeTabela;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         this.contexto = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
-        try {
+
             db.execSQL(SQL_CREATE_TABLE1);
-
-            Toast.makeText(contexto,"ERROR_ criando",Toast.LENGTH_LONG).show();
-        } catch (Exception e){
-            Toast.makeText(contexto,"ERROR_" + e.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        try {
             db.execSQL(SQL_CREATE_TABLE2);
-
-            Toast.makeText(contexto,"ERROR__ criando",Toast.LENGTH_LONG).show();
-        } catch (Exception e){
-            Toast.makeText(contexto,"ERROR__" + e.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        try {
             db.execSQL(SQL_CREATE_TABLE3);
-
-            Toast.makeText(contexto,"ERROR___ criando",Toast.LENGTH_LONG).show();
-        } catch (Exception e){
-            Toast.makeText(contexto,"ERROR___" + e.getMessage(),Toast.LENGTH_LONG).show();
-        }
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
