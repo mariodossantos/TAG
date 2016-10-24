@@ -125,4 +125,8 @@ public class CadastraChecklistsActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+
+
+
+
 }

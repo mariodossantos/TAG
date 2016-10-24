@@ -340,6 +340,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }  catch (Exception e){}
         return id + 1;
     }
+
+
 }
 
 
