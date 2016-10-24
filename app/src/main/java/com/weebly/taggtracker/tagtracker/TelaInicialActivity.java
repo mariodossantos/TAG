@@ -1,5 +1,6 @@
 package com.weebly.taggtracker.tagtracker;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,14 +29,14 @@ import android.widget.Toast;
 
 public class TelaInicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener
-    {
+{
 
     private NfcAdapter mNfcAdapter;
     private Dialog dialog;
-
-
+    private DatabaseHelper bdhelper;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TelaChecklistActivity telaC;
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -55,7 +56,12 @@ public class TelaInicialActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        bdhelper = new DatabaseHelper(this);
+        bdhelper.getWritableDatabase();
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        //SOBRE AS TABS
+        arrumaTabs();
 
         //SOBRE O BOTAO SUBMENU
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -77,11 +83,6 @@ public class TelaInicialActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
-
-
-        //SOBRE AS TABS
-        arrumaTabs();
-
     }
 
 
@@ -93,8 +94,15 @@ public class TelaInicialActivity extends AppCompatActivity
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         Pager adapter = new Pager(getSupportFragmentManager());
-        adapter.addFragment(new TelaChecklistActivity(), "CHECKLISTS", false);
-        adapter.addFragment(new TelaTagsActivity(), "TAGS", false);
+
+        telaC = new TelaChecklistActivity();
+        telaC.instanciaBD(bdhelper);
+        adapter.addFragment(telaC, "CHECKLISTS", false);
+
+        TelaTagsActivity telaT = new TelaTagsActivity();
+        telaT.instanciaBD(bdhelper);
+        adapter.addFragment(telaT, "TAGS", false);
+
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -130,7 +138,7 @@ public class TelaInicialActivity extends AppCompatActivity
 
 
         //Comportamento para fechar o menu
-        View usaBtnFechar = dialog.findViewById(R.id.btnFechaMenu);
+        final View usaBtnFechar = dialog.findViewById(R.id.btnFechaMenu);
         usaBtnFechar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +152,7 @@ public class TelaInicialActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 carregaAddChecklists();
-
+                usaBtnFechar.performClick();
             }
         });
 
@@ -153,8 +161,9 @@ public class TelaInicialActivity extends AppCompatActivity
         usaBtnTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verificaNFC(_view))
-                    carregaAddTags();
+                //if (verificaNFC(_view))
+                carregaAddTags();
+                usaBtnFechar.performClick();
             }
         });
 
@@ -165,14 +174,17 @@ public class TelaInicialActivity extends AppCompatActivity
 
     //CARREGA AS TELAS DE ADD AS COISAS AQUI
     public void carregaAddChecklists(){
-       // Toast.makeText(this, "Carrega a tela de add as checklist", Toast.LENGTH_LONG).show();
-        Intent it = new Intent(TelaInicialActivity.this, MainActivity.class);
-        startActivity(it);
+        // Toast.makeText(this, "Carrega a tela de add as checklist", Toast.LENGTH_LONG).show();
+        CadastraChecklistsActivity cadastra = new CadastraChecklistsActivity();
+        Intent it = new Intent(TelaInicialActivity.this, cadastra.getClass());
+        startActivityForResult(it, 1);
 
     }
 
     public void carregaAddTags(){
-        Toast.makeText(this, "Carrega a tela de add as tags", Toast.LENGTH_LONG).show();
+        CadastraTagsActivity ct = new CadastraTagsActivity();
+        Intent it = new Intent(TelaInicialActivity.this, ct.getClass());
+        startActivityForResult(it, 2);
     }
 
     //VERIFICA NFC AQUI
@@ -263,7 +275,16 @@ public class TelaInicialActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        //Caso insere checklists ou tags, atualiza a exibição das tabs
+        if (requestCode == 1 || requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+                arrumaTabs();
+            }
+        }
+    }
 
 
 

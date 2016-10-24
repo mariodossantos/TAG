@@ -17,6 +17,18 @@
     <string name="nfc_disabled">NFC está desativado nesse aparelho.</string>
     <string name="nfc_enabled">NFC está ativado nesse aparelho.</string>
 
+
+    <!-- SOBRE INSERÇÃO E EXCLUSÃO -->
+    <string name="tag_inserted">A tag foi inserida com sucesso</string>
+    <string name="tag_notinserted">Erro ao inserir a tag</string>
+    <string name="checklist_inserted">A checklist foi inserida com sucesso</string>
+    <string name="checklist_notinserted">Erro ao inserir a checklist</string>
+
+
+    <!-- ERROS -->
+    <string name="erro_exibirTags">Erro ao exibir as tags</string>
+    <string name="erro_exibirChecklist">Erro ao exibit as checklists</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
